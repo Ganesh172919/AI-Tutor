@@ -1,0 +1,18 @@
+{
+  "topic": "Compound Interest",
+  "fully_instantiated_prompt": "Explain this concept: compound interest\n\nContext: Learner is beginner level, likes analogies about money.\nMode: simple\n\nProvide your explanation with these parts:\n\n1. TL;DR: One sentence summary (max 20 words)\n\n2. Simple Explanation: 2-3 sentences in very simple English\n\n3. Real-Life Analogy: One analogy using money\n\n4. Worked Example: Step-by-step example with actual numbers/code\n   - Show each step\n   - Explain what happens at each step\n\n5. Practice Question: One question for the learner to try\n\n6. Hint: A hint for the practice question (don't give the answer)\n\nReturn as JSON:\n{\n  \"tldr\": \"...\",\n  \"explanation\": \"...\",\n  \"analogy\": \"...\",\n  \"worked_example\": \"...\",\n  \"practice_question\": \"...\",\n  \"hint\": \"...\"\n}",
+  "expected_response": {
+    "tldr": "Compound interest means you earn interest on your interest, making money grow faster.",
+    "explanation": "Compound interest is when your money earns interest, and then that interest also earns interest. It's like a snowball rolling downhill - it starts small but grows bigger and faster over time. The longer you wait, the more powerful it becomes.",
+    "analogy": "Imagine you plant a money tree that grows 10% more branches each year. Year 1: You have 10 branches, and grow 1 more (10% of 10). Year 2: Now you have 11 branches, so you grow 1.1 more (10% of 11). Each year, you grow more branches because you have more branches to grow from. That's compound interest!",
+    "worked_example": "Problem: You put $100 in a savings account with 10% yearly interest. How much after 3 years?\n\nYear 0 (Start): $100.00\n\nYear 1:\nInterest = $100 × 10% = $10.00\nNew balance = $100 + $10 = $110.00\n\nYear 2:\nInterest = $110 × 10% = $11.00\nNew balance = $110 + $11 = $121.00\n\nYear 3:\nInterest = $121 × 10% = $12.10\nNew balance = $121 + $12.10 = $133.10\n\nAfter 3 years: $133.10\n(You earned $33.10, not just $30!)",
+    "practice_question": "You put $200 in a savings account with 5% yearly compound interest. How much will you have after 2 years?",
+    "hint": "First, find 5% of $200 and add it. Then find 5% of that new amount and add it again."
+  },
+  "teaching_notes": [
+    "Show exact dollar amounts at each step",
+    "Highlight the 'interest on interest' effect",
+    "Compare to simple interest (would be just $30)",
+    "Use realistic interest rates"
+  ]
+}

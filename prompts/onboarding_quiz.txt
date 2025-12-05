@@ -1,0 +1,26 @@
+Create a short adaptive quiz to assess a learner's knowledge of {{topic}}.
+
+Generate exactly {{num_questions}} questions that:
+1. Start easy and get harder
+2. Test different aspects of the topic
+3. Have clear correct answers
+4. Are written in simple English
+
+For each question, provide:
+- The question text
+- The correct answer
+- What misconception a wrong answer might reveal
+
+Return as JSON:
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "question here",
+      "correct_answer": "answer here",
+      "difficulty": "easy|medium|hard",
+      "tests_concept": "what this tests",
+      "wrong_answer_reveals": "potential misconception"
+    }
+  ]
+}

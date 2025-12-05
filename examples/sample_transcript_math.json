@@ -1,0 +1,91 @@
+{
+  "session_id": "demo_session_001",
+  "topic": "Pythagorean Theorem",
+  "learner_profile": {
+    "learner_id": "learner_abc123",
+    "knowledge_level": "beginner",
+    "analogy_domain": "everyday",
+    "mode": "simple",
+    "confidence": "medium"
+  },
+  "transcript": [
+    {
+      "turn": 1,
+      "speaker": "tutor",
+      "message": "Hi! I'm your AI Tutor. Today we'll learn about the Pythagorean theorem. First, let me ask you a few questions to see what you already know. Ready?",
+      "type": "greeting"
+    },
+    {
+      "turn": 2,
+      "speaker": "learner",
+      "message": "Yes, I'm ready!",
+      "type": "response"
+    },
+    {
+      "turn": 3,
+      "speaker": "tutor",
+      "message": "Great! Question 1: What is a right triangle?",
+      "type": "assessment_question"
+    },
+    {
+      "turn": 4,
+      "speaker": "learner",
+      "message": "A triangle with a 90 degree angle?",
+      "type": "answer"
+    },
+    {
+      "turn": 5,
+      "speaker": "tutor",
+      "message": "Perfect! You got it. A right triangle has one corner that's exactly 90 degrees - like the corner of a book or a door frame. Now let's learn the main concept.\n\n**TL;DR:** In a right triangle, the longest side squared equals the sum of the other two sides squared.\n\n**Simple Explanation:** The Pythagorean theorem is a formula: a² + b² = c². Here, 'a' and 'b' are the two shorter sides, and 'c' is the longest side (we call it the hypotenuse). It only works for right triangles.\n\n**Think of it like this:** Imagine you have two small square rugs. If you combine their areas, you get the area of one bigger square rug. The sides of those rugs are the sides of your triangle!",
+      "type": "explanation"
+    },
+    {
+      "turn": 6,
+      "speaker": "tutor",
+      "message": "**Let me show you with numbers:**\n\nProblem: A right triangle has sides 3 and 4. Find the longest side.\n\nStep 1: Write the formula\na² + b² = c²\n\nStep 2: Put in numbers\n3² + 4² = c²\n\nStep 3: Calculate\n9 + 16 = c²\n25 = c²\n\nStep 4: Take square root\nc = √25 = 5\n\nThe longest side is 5!",
+      "type": "worked_example"
+    },
+    {
+      "turn": 7,
+      "speaker": "tutor",
+      "message": "**Your turn!** A right triangle has sides 5 and 12. What's the longest side?",
+      "type": "practice_question"
+    },
+    {
+      "turn": 8,
+      "speaker": "learner",
+      "message": "Um, let me try... 5² is 25, and 12² is 144. So 25 + 144 = 169. The square root of 169... is that 13?",
+      "type": "answer"
+    },
+    {
+      "turn": 9,
+      "speaker": "tutor",
+      "message": "🎉 **Excellent!** You got it! Let me check your work:\n\n✓ 5² = 25 (correct!)\n✓ 12² = 144 (correct!)\n✓ 25 + 144 = 169 (correct!)\n✓ √169 = 13 (correct!)\n\nYou've mastered the basic calculation. You showed great step-by-step thinking!",
+      "type": "positive_feedback"
+    },
+    {
+      "turn": 10,
+      "speaker": "learner",
+      "message": "What if I don't know the longest side is missing? What if one of the short sides is missing?",
+      "type": "question"
+    },
+    {
+      "turn": 11,
+      "speaker": "tutor",
+      "message": "Great question! You can rearrange the formula.\n\nIf you know c (longest) and a (one short side), find b:\nb² = c² - a²\n\n**Example:** Longest side is 10, one short side is 6. Find the other.\n\nb² = 10² - 6²\nb² = 100 - 36\nb² = 64\nb = √64 = 8\n\nThe missing side is 8!",
+      "type": "explanation"
+    },
+    {
+      "turn": 12,
+      "speaker": "tutor",
+      "message": "**Summary of your lesson:**\n\n✅ You learned what a right triangle is\n✅ You learned the formula: a² + b² = c²\n✅ You solved a problem correctly on your first try!\n✅ You asked a great follow-up question\n\n**Practice suggestion:** Try finding the missing side when c = 13 and a = 5.\n\n**Review this in:** 2 days for best retention.\n\nGreat job today! 🌟",
+      "type": "summary"
+    }
+  ],
+  "metrics": {
+    "questions_attempted": 2,
+    "correct_answers": 2,
+    "time_minutes": 8,
+    "topics_covered": ["right_triangle_definition", "pythagorean_formula", "finding_hypotenuse", "finding_leg"]
+  }
+}

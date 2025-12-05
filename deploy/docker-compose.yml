@@ -1,0 +1,65 @@
+# AI Tutor - Docker Compose Configuration
+# Use this to run the complete AI Tutor system locally
+
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: ai-tutor-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_FAST_MODEL=gemini-1.5-flash
+      - GEMINI_BALANCED_MODEL=gemini-1.5-flash
+      - GEMINI_DEEP_MODEL=gemini-1.5-pro
+      - GEMINI_MAX_RETRIES=3
+      - GEMINI_TIMEOUT=30
+    volumes:
+      # Persist learner data
+      - ai-tutor-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Frontend Service (simple static file server)
+  frontend:
+    image: nginx:alpine
+    container_name: ai-tutor-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ../src/frontend:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Optional: Redis for production session management
+  # Uncomment if you need Redis for scaling
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: ai-tutor-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   restart: unless-stopped
+
+volumes:
+  ai-tutor-data:
+    driver: local
+  # redis-data:
+  #   driver: local
+
+networks:
+  default:
+    name: ai-tutor-network

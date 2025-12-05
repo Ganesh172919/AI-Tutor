@@ -1,0 +1,67 @@
+{
+  "learner_id": "sample_learner_001",
+  "profile": {
+    "learner_id": "sample_learner_001",
+    "created_at": "2024-01-15T10:30:00",
+    "knowledge_level": "intermediate",
+    "preferred_pace": "medium",
+    "confidence": "medium",
+    "analogy_domain": "cooking",
+    "mode": "simple",
+    "misconceptions": [
+      "Confused compound and simple interest initially",
+      "Thought loops always start at 1"
+    ],
+    "interests": ["personal finance", "python programming", "basic math"]
+  },
+  "mastered_topics": [
+    "pythagorean_theorem",
+    "for_loops_basic",
+    "simple_interest"
+  ],
+  "pending_topics": [
+    "compound_interest",
+    "while_loops",
+    "quadratic_equations"
+  ],
+  "current_topic": "compound_interest",
+  "last_difficulty": "medium",
+  "topic_progress": {
+    "pythagorean_theorem": {
+      "topic_id": "pythagorean_theorem",
+      "topic_name": "Pythagorean Theorem",
+      "status": "mastered",
+      "score": 0.9,
+      "attempts": 5,
+      "correct_answers": 4,
+      "common_mistakes": ["forgot to take square root once"],
+      "last_practiced": "2024-01-14T15:00:00",
+      "next_review": "2024-01-21T15:00:00"
+    },
+    "for_loops_basic": {
+      "topic_id": "for_loops_basic",
+      "topic_name": "For Loops (Basic)",
+      "status": "mastered",
+      "score": 0.85,
+      "attempts": 7,
+      "correct_answers": 6,
+      "common_mistakes": ["off-by-one error with range()"],
+      "last_practiced": "2024-01-15T09:00:00",
+      "next_review": "2024-01-18T09:00:00"
+    },
+    "compound_interest": {
+      "topic_id": "compound_interest",
+      "topic_name": "Compound Interest",
+      "status": "in_progress",
+      "score": 0.5,
+      "attempts": 2,
+      "correct_answers": 1,
+      "common_mistakes": ["multiplied instead of using compound formula"],
+      "last_practiced": "2024-01-15T10:00:00",
+      "next_review": null
+    }
+  },
+  "session_count": 5,
+  "total_time_minutes": 47.5,
+  "last_session": "2024-01-15T10:30:00"
+}

@@ -1,0 +1,18 @@
+{
+  "topic": "For Loops in Programming",
+  "fully_instantiated_prompt": "Explain this concept: for loop in programming\n\nContext: Learner is beginner level, likes analogies about everyday.\nMode: simple\n\nProvide your explanation with these parts:\n\n1. TL;DR: One sentence summary (max 20 words)\n\n2. Simple Explanation: 2-3 sentences in very simple English\n\n3. Real-Life Analogy: One analogy using everyday\n\n4. Worked Example: Step-by-step example with actual numbers/code\n   - Show each step\n   - Explain what happens at each step\n\n5. Practice Question: One question for the learner to try\n\n6. Hint: A hint for the practice question (don't give the answer)\n\nReturn as JSON:\n{\n  \"tldr\": \"...\",\n  \"explanation\": \"...\",\n  \"analogy\": \"...\",\n  \"worked_example\": \"...\",\n  \"practice_question\": \"...\",\n  \"hint\": \"...\"\n}",
+  "expected_response": {
+    "tldr": "A for loop repeats code a specific number of times automatically.",
+    "explanation": "A for loop is like a robot that does the same task over and over. You tell it how many times to repeat, and it counts for you. Each time through the loop is called an 'iteration'.",
+    "analogy": "Imagine you're handing out 5 cookies to 5 friends. Instead of saying 'give cookie to friend 1, give cookie to friend 2...' you just say 'for each friend from 1 to 5, give them a cookie.' The for loop does this counting and giving automatically.",
+    "worked_example": "Let's print numbers 1 to 3:\n\nCode:\nfor i in range(1, 4):\n    print(i)\n\nStep 1: Loop starts, i = 1\n→ Prints: 1\n\nStep 2: Loop continues, i = 2\n→ Prints: 2\n\nStep 3: Loop continues, i = 3\n→ Prints: 3\n\nStep 4: i would be 4, but 4 is not less than 4\n→ Loop stops\n\nOutput:\n1\n2\n3",
+    "practice_question": "Write a for loop that prints the numbers 1 through 5. What will be the output?",
+    "hint": "Use range(1, 6) because range stops before the last number. So range(1, 6) gives you 1, 2, 3, 4, 5."
+  },
+  "teaching_notes": [
+    "Use concrete examples like cookies/friends",
+    "Show each iteration step-by-step",
+    "Explain the 'off by one' nature of range()",
+    "Keep code examples very short"
+  ]
+}

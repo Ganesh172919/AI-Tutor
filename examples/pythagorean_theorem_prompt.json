@@ -1,0 +1,18 @@
+{
+  "topic": "Pythagorean Theorem",
+  "fully_instantiated_prompt": "Explain this concept: Pythagorean Theorem\n\nContext: Learner is beginner level, likes analogies about everyday.\nMode: simple\n\nProvide your explanation with these parts:\n\n1. TL;DR: One sentence summary (max 20 words)\n\n2. Simple Explanation: 2-3 sentences in very simple English\n\n3. Real-Life Analogy: One analogy using everyday\n\n4. Worked Example: Step-by-step example with actual numbers/code\n   - Show each step\n   - Explain what happens at each step\n\n5. Practice Question: One question for the learner to try\n\n6. Hint: A hint for the practice question (don't give the answer)\n\nReturn as JSON:\n{\n  \"tldr\": \"...\",\n  \"explanation\": \"...\",\n  \"analogy\": \"...\",\n  \"worked_example\": \"...\",\n  \"practice_question\": \"...\",\n  \"hint\": \"...\"\n}",
+  "expected_response": {
+    "tldr": "In a right triangle, the longest side squared equals the sum of the other two sides squared.",
+    "explanation": "The Pythagorean theorem is a formula for right triangles. A right triangle has one 90-degree corner, like the corner of a book. The formula says: a² + b² = c², where c is the longest side (called the hypotenuse).",
+    "analogy": "Think of it like checking how much fabric you need. If you have two square pieces of fabric, one 3 inches and one 4 inches on each side, and you want one big square that uses the same total fabric, that big square would be 5 inches on each side. The areas of the small squares (9 + 16 = 25) equal the area of the big square (25).",
+    "worked_example": "Problem: Find the longest side of a right triangle with sides 3 and 4.\n\nStep 1: Write the formula\na² + b² = c²\n\nStep 2: Put in the numbers\n3² + 4² = c²\n\nStep 3: Calculate the squares\n9 + 16 = c²\n\nStep 4: Add them up\n25 = c²\n\nStep 5: Take the square root\nc = √25 = 5\n\nAnswer: The longest side is 5.",
+    "practice_question": "A right triangle has sides of 5 and 12. What is the length of the longest side (hypotenuse)?",
+    "hint": "Square both numbers (5² and 12²), add them together, then take the square root of the result."
+  },
+  "teaching_notes": [
+    "Always compute step-by-step with actual numbers",
+    "Use simple words like 'longest side' before introducing 'hypotenuse'",
+    "The fabric analogy connects math to something tangible",
+    "Practice question uses larger numbers to build confidence"
+  ]
+}

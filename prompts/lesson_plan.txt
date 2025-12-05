@@ -1,0 +1,24 @@
+Create a micro-lesson plan for teaching {{topic}} to a {{level}} learner.
+
+Requirements:
+1. Break into micro-topics (each 2-8 minutes)
+2. Each micro-lesson has: summary, objective, example, practice
+3. Order from simple to complex
+4. Use analogies from: {{analogy_domain}}
+
+Return as JSON:
+{
+  "topic": "main topic",
+  "total_time_minutes": 20,
+  "micro_lessons": [
+    {
+      "id": 1,
+      "title": "micro-topic name",
+      "time_minutes": 5,
+      "summary": "one sentence what this covers",
+      "objective": "what learner will understand",
+      "real_life_connection": "why this matters",
+      "practice_steps": ["step 1", "step 2"]
+    }
+  ]
+}

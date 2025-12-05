@@ -1,0 +1,24 @@
+Evaluate this learner's answer.
+
+Question: {{question}}
+Expected Answer: {{expected_answer}}
+Learner's Answer: {{learner_answer}}
+Topic: {{topic}}
+
+Analyze:
+1. Is the answer correct? (yes/partially/no)
+2. What did they get right?
+3. What misconception might they have (if wrong)?
+4. Give encouraging, specific feedback
+5. Provide a correction if needed (in simple terms)
+
+Return as JSON:
+{
+  "is_correct": "yes|partially|no",
+  "confidence": 0.9,
+  "what_was_right": "...",
+  "misconception_detected": "..." or null,
+  "feedback": "encouraging feedback here",
+  "correction": "simple correction" or null,
+  "next_suggestion": "what to do next"
+}

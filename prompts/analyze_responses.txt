@@ -1,0 +1,22 @@
+Analyze these quiz responses to create a learner profile.
+
+Topic: {{topic}}
+Questions and Answers:
+{{responses}}
+
+Create a learner profile in ONE short paragraph covering:
+- Prior knowledge level (beginner/intermediate/advanced)
+- Any misconceptions detected
+- Preferred pace (slow/medium/fast)
+- Confidence level (low/medium/high)
+- Suggested starting point
+
+Also return structured JSON:
+{
+  "profile_summary": "one paragraph description",
+  "knowledge_level": "beginner|intermediate|advanced",
+  "misconceptions": ["list of misconceptions"],
+  "pace": "slow|medium|fast",
+  "confidence": "low|medium|high",
+  "start_from": "suggested starting topic"
+}

@@ -1,0 +1,30 @@
+Explain this concept: {{concept}}
+
+Context: Learner is {{level}} level, likes analogies about {{analogy_domain}}.
+Mode: {{mode}}
+
+Provide your explanation with these parts:
+
+1. TL;DR: One sentence summary (max 20 words)
+
+2. Simple Explanation: 2-3 sentences in very simple English
+
+3. Real-Life Analogy: One analogy using {{analogy_domain}}
+
+4. Worked Example: Step-by-step example with actual numbers/code
+   - Show each step
+   - Explain what happens at each step
+
+5. Practice Question: One question for the learner to try
+
+6. Hint: A hint for the practice question (don't give the answer)
+
+Return as JSON:
+{
+  "tldr": "...",
+  "explanation": "...",
+  "analogy": "...",
+  "worked_example": "...",
+  "practice_question": "...",
+  "hint": "..."
+}

@@ -1,0 +1,98 @@
+{
+  "session_id": "demo_session_002",
+  "topic": "For Loops in Python",
+  "learner_profile": {
+    "learner_id": "learner_xyz789",
+    "knowledge_level": "beginner",
+    "analogy_domain": "cooking",
+    "mode": "simple",
+    "confidence": "low"
+  },
+  "transcript": [
+    {
+      "turn": 1,
+      "speaker": "tutor",
+      "message": "Hi! Today we'll learn about for loops. They're super useful in programming. Since you like cooking analogies, I'll use those! First, have you ever written any code before?",
+      "type": "greeting"
+    },
+    {
+      "turn": 2,
+      "speaker": "learner",
+      "message": "A little bit. I know what print() does.",
+      "type": "response"
+    },
+    {
+      "turn": 3,
+      "speaker": "tutor",
+      "message": "Perfect! That's all you need to start.\n\n**TL;DR:** A for loop repeats code a specific number of times automatically.\n\n**Simple Explanation:** Instead of writing the same code over and over, a for loop does it for you. You just tell it how many times to repeat.\n\n**Cooking analogy:** Imagine you're making 5 pancakes. Instead of saying 'pour batter, flip, remove' five separate times, you say 'for each pancake from 1 to 5, do: pour batter, flip, remove.' The loop handles the counting!",
+      "type": "explanation"
+    },
+    {
+      "turn": 4,
+      "speaker": "tutor",
+      "message": "**Here's actual code:**\n\n```python\nfor i in range(1, 4):\n    print(i)\n```\n\n**What happens step by step:**\n\n🔄 Loop starts, i = 1\n   → Prints: 1\n\n🔄 Loop continues, i = 2\n   → Prints: 2\n\n🔄 Loop continues, i = 3\n   → Prints: 3\n\n🔄 i would be 4, but we said stop before 4\n   → Loop ends\n\n**Output:**\n```\n1\n2\n3\n```",
+      "type": "worked_example"
+    },
+    {
+      "turn": 5,
+      "speaker": "tutor",
+      "message": "**Your turn!** Write code to print numbers 1 through 5. What would the output be?",
+      "type": "practice_question"
+    },
+    {
+      "turn": 6,
+      "speaker": "learner",
+      "message": "for i in range(1, 5): print(i)\n\nOutput would be 1, 2, 3, 4, 5?",
+      "type": "answer"
+    },
+    {
+      "turn": 7,
+      "speaker": "tutor",
+      "message": "Almost! You're close, but there's a small trick with range().\n\n**What your code actually does:**\nrange(1, 5) gives: 1, 2, 3, 4\n(It stops BEFORE 5)\n\n**To get 1 through 5, use:**\n```python\nfor i in range(1, 6):\n    print(i)\n```\n\nrange(1, 6) gives: 1, 2, 3, 4, 5\n\n**Think of it like cooking:** If you want pancakes 1 through 5, you set your timer to stop at 6, because it stops right before that number.",
+      "type": "correction_with_encouragement"
+    },
+    {
+      "turn": 8,
+      "speaker": "learner",
+      "message": "Oh! So range(1, 6) means 'start at 1, stop before 6'?",
+      "type": "clarification"
+    },
+    {
+      "turn": 9,
+      "speaker": "tutor",
+      "message": "**Exactly right!** 🎉\n\nrange(start, stop) means:\n- Start at 'start'\n- Stop BEFORE 'stop'\n\nSo range(1, 6) = 1, 2, 3, 4, 5\nAnd range(0, 3) = 0, 1, 2\n\nThis is called 'exclusive end' - the end number is excluded.",
+      "type": "confirmation"
+    },
+    {
+      "turn": 10,
+      "speaker": "tutor",
+      "message": "**Let's try one more!** \n\nWrite a loop that prints:\n```\nPancake 1 is ready!\nPancake 2 is ready!\nPancake 3 is ready!\n```\n\n**Hint:** You can mix text and variables with f-strings: `print(f\"Pancake {i} is ready!\")`",
+      "type": "practice_question"
+    },
+    {
+      "turn": 11,
+      "speaker": "learner",
+      "message": "for i in range(1, 4):\n    print(f\"Pancake {i} is ready!\")",
+      "type": "answer"
+    },
+    {
+      "turn": 12,
+      "speaker": "tutor",
+      "message": "🎉 **Perfect!** You nailed it!\n\nYou used range(1, 4) correctly to get 1, 2, 3. And the f-string syntax is spot on.\n\n**Your code output:**\n```\nPancake 1 is ready!\nPancake 2 is ready!\nPancake 3 is ready!\n```\n\nYou're getting the hang of this!",
+      "type": "positive_feedback"
+    },
+    {
+      "turn": 13,
+      "speaker": "tutor",
+      "message": "**Summary of your lesson:**\n\n✅ You learned what a for loop does (repeats code)\n✅ You understand range(start, stop) - stop is exclusive\n✅ You can use variables inside print statements\n✅ You recovered well from the range() trick!\n\n**Key things to remember:**\n- range(1, 5) gives 1, 2, 3, 4 (not 5!)\n- The loop variable (i) changes each time\n- Indentation matters in Python\n\n**Practice:** Try printing 'Day 1', 'Day 2'... up to 'Day 7'\n\n**Review in:** 1 day\n\nExcellent work! 🌟",
+      "type": "summary"
+    }
+  ],
+  "metrics": {
+    "questions_attempted": 2,
+    "correct_answers": 1,
+    "hints_used": 1,
+    "time_minutes": 12,
+    "topics_covered": ["for_loop_syntax", "range_function", "print_statement", "f_strings"]
+  }
+}

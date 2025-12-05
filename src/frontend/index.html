@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Main container */
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            color: #444;
+            margin: 16px 0 8px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Content sections */
+        .tldr {
+            background: #f8f9ff;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .analogy {
+            background: #fff8e6;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #f5a623;
+            margin: 16px 0;
+        }
+
+        .worked-example {
+            background: #f0fff4;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #38a169;
+            margin: 16px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+
+        .practice-question {
+            background: #fff0f5;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #e53e3e;
+            margin: 16px 0;
+        }
+
+        .hint {
+            background: #e6f6ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* Feedback */
+        .feedback {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .feedback.partial {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Chat */
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 16px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chat-message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            max-width: 80%;
+        }
+
+        .chat-message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-message.tutor {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+        }
+
+        /* Quiz */
+        .quiz-option {
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .quiz-option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f0f0f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Step indicator */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .step.active {
+            background: white;
+        }
+
+        .step.completed {
+            background: #38a169;
+        }
+
+        /* Summary */
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .summary-item .icon {
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        // API base URL - change for production
+        const API_URL = 'http://localhost:8000';
+
+        // API helper functions
+        const api = {
+            async post(endpoint, data) {
+                const response = await fetch(`${API_URL}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'API error');
+                }
+                return response.json();
+            },
+            async get(endpoint) {
+                const response = await fetch(`${API_URL}${endpoint}`);
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'API error');
+                }
+                return response.json();
+            }
+        };
+
+        // Main App Component
+        function App() {
+            const [screen, setScreen] = useState('welcome'); // welcome, onboarding, quiz, lesson, chat, summary
+            const [learnerId, setLearnerId] = useState(null);
+            const [topic, setTopic] = useState('');
+            const [quizData, setQuizData] = useState(null);
+            const [lessonContent, setLessonContent] = useState(null);
+            const [loading, setLoading] = useState(false);
+            const [error, setError] = useState(null);
+            const [progress, setProgress] = useState(0);
+            const [preferences, setPreferences] = useState({
+                analogy_domain: 'everyday',
+                mode: 'simple'
+            });
+
+            // Welcome Screen
+            if (screen === 'welcome') {
+                return (
+                    <div className="app-container">
+                        <header className="header">
+                            <h1>🎓 AI Tutor</h1>
+                            <p>Learn anything with simple explanations and real-life examples</p>
+                        </header>
+                        
+                        <div className="card">
+                            <h2>What would you like to learn today?</h2>
+                            
+                            <div className="form-group">
+                                <label>Topic</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="e.g., Pythagorean theorem, Python loops, compound interest..."
+                                    value={topic}
+                                    onChange={(e) => setTopic(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>I like examples about...</label>
+                                <select 
+                                    value={preferences.analogy_domain}
+                                    onChange={(e) => setPreferences({...preferences, analogy_domain: e.target.value})}
+                                >
+                                    <option value="everyday">Everyday life (cooking, shopping, etc.)</option>
+                                    <option value="sports">Sports and games</option>
+                                    <option value="cooking">Cooking and food</option>
+                                    <option value="money">Money and finance</option>
+                                    <option value="technology">Technology and gadgets</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Explanation style</label>
+                                <select 
+                                    value={preferences.mode}
+                                    onChange={(e) => setPreferences({...preferences, mode: e.target.value})}
+                                >
+                                    <option value="simple">Explain like I'm 5 (simple)</option>
+                                    <option value="in-depth">More detailed explanations</option>
+                                </select>
+                            </div>
+
+                            {error && <div className="feedback incorrect">{error}</div>}
+
+                            <button 
+                                className="btn btn-primary" 
+                                onClick={async () => {
+                                    if (!topic.trim()) {
+                                        setError('Please enter a topic');
+                                        return;
+                                    }
+                                    setLoading(true);
+                                    setError(null);
+                                    try {
+                                        const result = await api.post('/api/onboarding/start', {
+                                            topic: topic,
+                                            analogy_domain: preferences.analogy_domain,
+                                            mode: preferences.mode,
+                                            num_questions: 5
+                                        });
+                                        setLearnerId(result.learner_id);
+                                        setQuizData(result);
+                                        setScreen('quiz');
+                                    } catch (err) {
+                                        setError(err.message);
+                                    }
+                                    setLoading(false);
+                                }}
+                                disabled={loading}
+                            >
+                                {loading ? 'Starting...' : 'Start Learning →'}
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Quiz Screen
+            if (screen === 'quiz') {
+                return (
+                    <QuizScreen 
+                        quizData={quizData}
+                        learnerId={learnerId}
+                        topic={topic}
+                        onComplete={(profile) => {
+                            setProgress(20);
+                            setScreen('lesson');
+                        }}
+                        onBack={() => setScreen('welcome')}
+                    />
+                );
+            }
+
+            // Lesson Screen
+            if (screen === 'lesson') {
+                return (
+                    <LessonScreen 
+                        learnerId={learnerId}
+                        topic={topic}
+                        progress={progress}
+                        setProgress={setProgress}
+                        onChat={() => setScreen('chat')}
+                        onComplete={() => setScreen('summary')}
+                    />
+                );
+            }
+
+            // Chat Screen
+            if (screen === 'chat') {
+                return (
+                    <ChatScreen 
+                        learnerId={learnerId}
+                        topic={topic}
+                        onBack={() => setScreen('lesson')}
+                    />
+                );
+            }
+
+            // Summary Screen
+            if (screen === 'summary') {
+                return (
+                    <SummaryScreen 
+                        learnerId={learnerId}
+                        topic={topic}
+                        onNewTopic={() => {
+                            setTopic('');
+                            setScreen('welcome');
+                        }}
+                        onContinue={() => setScreen('lesson')}
+                    />
+                );
+            }
+
+            return null;
+        }
+
+        // Quiz Screen Component
+        function QuizScreen({ quizData, learnerId, topic, onComplete, onBack }) {
+            const [currentQ, setCurrentQ] = useState(0);
+            const [answers, setAnswers] = useState([]);
+            const [currentAnswer, setCurrentAnswer] = useState('');
+            const [loading, setLoading] = useState(false);
+            
+            const questions = quizData?.questions || [];
+            const question = questions[currentQ];
+            
+            const submitAnswer = async () => {
+                const newAnswers = [...answers, {
+                    question: question.text,
+                    answer: currentAnswer
+                }];
+                setAnswers(newAnswers);
+                setCurrentAnswer('');
+                
+                if (currentQ < questions.length - 1) {
+                    setCurrentQ(currentQ + 1);
+                } else {
+                    // Complete onboarding
+                    setLoading(true);
+                    try {
+                        const result = await api.post('/api/onboarding/complete', {
+                            learner_id: learnerId,
+                            topic: topic,
+                            responses: newAnswers
+                        });
+                        onComplete(result);
+                    } catch (err) {
+                        console.error(err);
+                        onComplete(null);
+                    }
+                    setLoading(false);
+                }
+            };
+
+            if (loading) {
+                return (
+                    <div className="app-container">
+                        <header className="header">
+                            <h1>🎓 AI Tutor</h1>
+                        </header>
+                        <div className="card loading">
+                            <div className="spinner"></div>
+                            <p>Analyzing your answers...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="app-container">
+                    <header className="header">
+                        <h1>🎓 Quick Assessment</h1>
+                        <p>Let's see what you already know about {topic}</p>
+                    </header>
+
+                    <div className="steps">
+                        {questions.map((_, i) => (
+                            <div 
+                                key={i} 
+                                className={`step ${i < currentQ ? 'completed' : ''} ${i === currentQ ? 'active' : ''}`}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="card">
+                        <p style={{color: '#666', marginBottom: '8px'}}>
+                            Question {currentQ + 1} of {questions.length}
+                        </p>
+                        <h2>{question?.text}</h2>
+                        
+                        <div className="form-group" style={{marginTop: '20px'}}>
+                            <textarea
+                                placeholder="Type your answer here..."
+                                value={currentAnswer}
+                                onChange={(e) => setCurrentAnswer(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="btn-group">
+                            <button className="btn btn-secondary" onClick={onBack}>
+                                ← Back
+                            </button>
+                            <button 
+                                className="btn btn-primary" 
+                                onClick={submitAnswer}
+                                disabled={!currentAnswer.trim()}
+                            >
+                                {currentQ < questions.length - 1 ? 'Next →' : 'Finish ✓'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Lesson Screen Component
+        function LessonScreen({ learnerId, topic, progress, setProgress, onChat, onComplete }) {
+            const [content, setContent] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [answer, setAnswer] = useState('');
+            const [feedback, setFeedback] = useState(null);
+            const [showHint, setShowHint] = useState(false);
+            const [hintText, setHintText] = useState('');
+
+            useEffect(() => {
+                loadLesson();
+            }, []);
+
+            const loadLesson = async () => {
+                setLoading(true);
+                try {
+                    const result = await api.post('/api/lesson/explain', {
+                        learner_id: learnerId,
+                        concept: topic
+                    });
+                    setContent(result.content);
+                } catch (err) {
+                    console.error(err);
+                }
+                setLoading(false);
+            };
+
+            const checkAnswer = async () => {
+                if (!answer.trim()) return;
+                
+                setLoading(true);
+                try {
+                    const result = await api.post('/api/evaluate/answer', {
+                        learner_id: learnerId,
+                        topic: topic,
+                        question: content?.practice_question || '',
+                        expected_answer: 'open_response',
+                        learner_answer: answer
+                    });
+                    setFeedback(result.evaluation);
+                    if (result.evaluation.is_correct === 'yes') {
+                        setProgress(Math.min(progress + 20, 100));
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+                setLoading(false);
+            };
+
+            const getHint = async () => {
+                setLoading(true);
+                try {
+                    const result = await api.post('/api/evaluate/hint', {
+                        learner_id: learnerId,
+                        topic: topic,
+                        question: content?.practice_question || '',
+                        wrong_attempt: answer,
+                        hint_level: showHint ? 2 : 1
+                    });
+                    setHintText(result.hint?.hint || 'Think about what we just learned.');
+                    setShowHint(true);
+                } catch (err) {
+                    console.error(err);
+                }
+                setLoading(false);
+            };
+
+            if (loading && !content) {
+                return (
+                    <div className="app-container">
+                        <header className="header">
+                            <h1>🎓 AI Tutor</h1>
+                        </header>
+                        <div className="card loading">
+                            <div className="spinner"></div>
+                            <p>Preparing your lesson...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="app-container">
+                    <header className="header">
+                        <h1>📚 Learning: {topic}</h1>
+                    </header>
+
+                    <div className="progress-bar">
+                        <div className="progress-fill" style={{width: `${progress}%`}}></div>
+                    </div>
+
+                    <div className="card">
+                        {content?.tldr && (
+                            <div className="tldr">
+                                <strong>TL;DR:</strong> {content.tldr}
+                            </div>
+                        )}
+
+                        {content?.explanation && (
+                            <>
+                                <h3>📖 Explanation</h3>
+                                <p>{content.explanation}</p>
+                            </>
+                        )}
+
+                        {content?.analogy && (
+                            <div className="analogy">
+                                <strong>💡 Think of it like this:</strong> {content.analogy}
+                            </div>
+                        )}
+
+                        {content?.worked_example && (
+                            <>
+                                <h3>✏️ Worked Example</h3>
+                                <div className="worked-example">{content.worked_example}</div>
+                            </>
+                        )}
+
+                        {content?.practice_question && (
+                            <>
+                                <h3>🎯 Your Turn!</h3>
+                                <div className="practice-question">
+                                    {content.practice_question}
+                                </div>
+                                
+                                <div className="form-group">
+                                    <textarea
+                                        placeholder="Type your answer here..."
+                                        value={answer}
+                                        onChange={(e) => setAnswer(e.target.value)}
+                                    />
+                                </div>
+
+                                {showHint && (
+                                    <div className="hint">
+                                        <strong>💭 Hint:</strong> {hintText || content.hint}
+                                    </div>
+                                )}
+
+                                {feedback && (
+                                    <div className={`feedback ${feedback.is_correct === 'yes' ? 'correct' : feedback.is_correct === 'partially' ? 'partial' : 'incorrect'}`}>
+                                        <p><strong>{feedback.is_correct === 'yes' ? '🎉 Correct!' : feedback.is_correct === 'partially' ? '🤔 Almost!' : '💪 Not quite...'}</strong></p>
+                                        <p>{feedback.feedback}</p>
+                                        {feedback.correction && <p><em>Correction: {feedback.correction}</em></p>}
+                                    </div>
+                                )}
+
+                                <div className="btn-group">
+                                    <button className="btn btn-secondary" onClick={getHint} disabled={loading}>
+                                        Need a hint?
+                                    </button>
+                                    <button 
+                                        className="btn btn-primary" 
+                                        onClick={checkAnswer}
+                                        disabled={loading || !answer.trim()}
+                                    >
+                                        Check Answer
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="card">
+                        <div className="btn-group">
+                            <button className="btn btn-secondary" onClick={onChat}>
+                                💬 Ask a Question
+                            </button>
+                            <button className="btn btn-primary" onClick={onComplete}>
+                                Finish Lesson →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Chat Screen Component
+        function ChatScreen({ learnerId, topic, onBack }) {
+            const [messages, setMessages] = useState([
+                { role: 'tutor', text: `Hi! I'm here to help you learn about ${topic}. What would you like to know?` }
+            ]);
+            const [input, setInput] = useState('');
+            const [loading, setLoading] = useState(false);
+
+            const sendMessage = async () => {
+                if (!input.trim() || loading) return;
+
+                const userMessage = { role: 'user', text: input };
+                setMessages([...messages, userMessage]);
+                setInput('');
+                setLoading(true);
+
+                try {
+                    const result = await api.post('/api/chat', {
+                        learner_id: learnerId,
+                        message: input,
+                        context_topic: topic
+                    });
+                    setMessages(msgs => [...msgs, { role: 'tutor', text: result.response }]);
+                } catch (err) {
+                    setMessages(msgs => [...msgs, { role: 'tutor', text: 'Sorry, I had trouble understanding. Can you rephrase that?' }]);
+                }
+                setLoading(false);
+            };
+
+            return (
+                <div className="app-container">
+                    <header className="header">
+                        <h1>💬 Chat with Tutor</h1>
+                        <p>Ask anything about {topic}</p>
+                    </header>
+
+                    <div className="card">
+                        <div className="chat-container">
+                            {messages.map((msg, i) => (
+                                <div key={i} className={`chat-message ${msg.role}`}>
+                                    {msg.text}
+                                </div>
+                            ))}
+                            {loading && (
+                                <div className="chat-message tutor">
+                                    <em>Thinking...</em>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="chat-input-container">
+                            <input
+                                type="text"
+                                placeholder="Type your question..."
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                            />
+                            <button className="btn btn-primary" onClick={sendMessage} disabled={loading}>
+                                Send
+                            </button>
+                        </div>
+
+                        <button className="btn btn-secondary" onClick={onBack} style={{marginTop: '16px', width: '100%'}}>
+                            ← Back to Lesson
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        // Summary Screen Component
+        function SummaryScreen({ learnerId, topic, onNewTopic, onContinue }) {
+            const [summary, setSummary] = useState(null);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                loadSummary();
+            }, []);
+
+            const loadSummary = async () => {
+                try {
+                    const result = await api.post('/api/evaluate/summary', {
+                        learner_id: learnerId,
+                        topic: topic,
+                        num_questions: 3,
+                        num_correct: 2,
+                        time_minutes: 10,
+                        mistakes: []
+                    });
+                    setSummary(result.summary);
+                } catch (err) {
+                    console.error(err);
+                }
+                setLoading(false);
+            };
+
+            return (
+                <div className="app-container">
+                    <header className="header">
+                        <h1>🎉 Lesson Complete!</h1>
+                        <p>Great job learning about {topic}</p>
+                    </header>
+
+                    <div className="card">
+                        {loading ? (
+                            <div className="loading">
+                                <div className="spinner"></div>
+                                <p>Preparing your summary...</p>
+                            </div>
+                        ) : (
+                            <>
+                                <h2>📊 What You Learned</h2>
+                                
+                                {summary?.learned?.map((item, i) => (
+                                    <div key={i} className="summary-item">
+                                        <span className="icon">✅</span>
+                                        <span>{item}</span>
+                                    </div>
+                                ))}
+
+                                {summary?.unclear?.length > 0 && (
+                                    <>
+                                        <h3>📝 Review These</h3>
+                                        {summary.unclear.map((item, i) => (
+                                            <div key={i} className="summary-item">
+                                                <span className="icon">🔄</span>
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+
+                                {summary?.practice_items?.length > 0 && (
+                                    <>
+                                        <h3>🎯 Practice Suggestions</h3>
+                                        {summary.practice_items.map((item, i) => (
+                                            <div key={i} className="summary-item">
+                                                <span className="icon">💪</span>
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+
+                                <div className="analogy" style={{marginTop: '20px'}}>
+                                    {summary?.encouragement || 'Great effort! Keep learning!'}
+                                </div>
+
+                                {summary?.review_in_days && (
+                                    <p style={{marginTop: '16px', color: '#666'}}>
+                                        📅 Review this topic in {summary.review_in_days} day(s) for better retention.
+                                    </p>
+                                )}
+                            </>
+                        )}
+
+                        <div className="btn-group">
+                            <button className="btn btn-secondary" onClick={onContinue}>
+                                Continue Learning
+                            </button>
+                            <button className="btn btn-primary" onClick={onNewTopic}>
+                                Learn Something New
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Render the app
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>

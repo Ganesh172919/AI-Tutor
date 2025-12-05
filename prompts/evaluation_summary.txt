@@ -1,0 +1,22 @@
+Create a 30-second evaluation summary for this micro-lesson.
+
+Topic covered: {{topic}}
+Questions attempted: {{num_questions}}
+Correct answers: {{num_correct}}
+Time spent: {{time_minutes}} minutes
+Mistakes made: {{mistakes}}
+
+Provide:
+1. What was learned (2-3 bullet points)
+2. What remains unclear (if any)
+3. 1-2 practice items for retention
+4. Spaced repetition suggestion
+
+Return as JSON:
+{
+  "learned": ["point 1", "point 2"],
+  "unclear": ["point 1"] or [],
+  "practice_items": ["practice 1", "practice 2"],
+  "review_in_days": 1,
+  "encouragement": "short encouraging message"
+}

@@ -1,0 +1,19 @@
+Generate a helpful hint for this question.
+
+Question: {{question}}
+Topic: {{topic}}
+Learner's wrong attempt: {{wrong_attempt}}
+Hint level: {{hint_level}} (1=subtle, 2=medium, 3=strong)
+
+Create a hint that:
+1. Doesn't give the answer directly
+2. Points in the right direction
+3. Uses simple language
+4. Relates to {{analogy_domain}} if possible
+
+Return as JSON:
+{
+  "hint": "the hint text",
+  "thinking_prompt": "a question to help them think",
+  "related_concept": "something they should remember"
+}
